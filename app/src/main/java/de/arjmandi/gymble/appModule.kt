@@ -1,5 +1,7 @@
 package de.arjmandi.gymble
 
+import de.arjmandi.gymble.data.GymRepositoryImpl
+import de.arjmandi.gymble.data.remote.GymsListApi
 import de.arjmandi.gymble.domain.repository.GymRepository
 import de.arjmandi.gymble.domain.usecase.GetGymsUseCase
 import de.arjmandi.gymble.domain.usecase.ShuffleGymsUseCase
@@ -22,7 +24,7 @@ val domainModule = module {
 }
 
 val dataModule = module {
-    single {
+    single <HttpClient> {
         HttpClient(CIO) {
             install(ContentNegotiation) {
                 json(
@@ -37,4 +39,6 @@ val dataModule = module {
             }
         }
     }
+    single<GymsListApi> { GymsListApi(get<HttpClient>()) }
+    single<GymRepository> { GymRepositoryImpl(get<GymsListApi>()) }
 }
