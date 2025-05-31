@@ -6,7 +6,10 @@ import io.ktor.client.call.body
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
@@ -15,9 +18,22 @@ class GymsListApi(private val client: HttpClient) {
 
     suspend fun fetchGymList(): ApiResult<GymListDto> {
         return try {
-            val response: HttpResponse = client.get("https://pastebin.com/raw/wubUrG9p")
+            val response: HttpResponse = client.get("https://pastebin.com/raw/k6LBh98f"){
+                headers {
+                    append(HttpHeaders.Accept, "text/plain")
+                }
+            }
+
+            /*
+            val text = response.bodyAsText()
+            val data = Json { ignoreUnknownKeys = true }.decodeFromString<GymListDto>(text)
+             */
             when (response.status) {
-                HttpStatusCode.OK -> ApiResult.Success(response.body())
+                HttpStatusCode.OK -> {
+                    val text = response.bodyAsText()
+                    val data = Json.decodeFromString<GymListDto>(text)
+                    ApiResult.Success(data)
+                }
                 HttpStatusCode.TooManyRequests -> ApiResult.HttpError(429, "Rate limit exceeded. Please slow down.")
                 HttpStatusCode.NotFound -> ApiResult.HttpError(404, "Requested resource not found.")
                 HttpStatusCode.InternalServerError -> ApiResult.HttpError(500, "Internal server error.")

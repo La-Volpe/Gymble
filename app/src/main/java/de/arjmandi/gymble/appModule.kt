@@ -6,6 +6,8 @@ import de.arjmandi.gymble.domain.repository.GymRepository
 import de.arjmandi.gymble.domain.usecase.GetGymsUseCase
 import de.arjmandi.gymble.domain.usecase.ShuffleGymsUseCase
 import de.arjmandi.gymble.domain.usecase.SwipeGymUseCase
+import de.arjmandi.gymble.matching_presentation.MatchingContext
+import de.arjmandi.gymble.matching_presentation.ui.MatchingViewModel
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -15,6 +17,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val domainModule = module {
@@ -24,7 +27,7 @@ val domainModule = module {
 }
 
 val dataModule = module {
-    single <HttpClient> {
+    single<HttpClient> {
         HttpClient(CIO) {
             install(ContentNegotiation) {
                 json(
@@ -41,4 +44,15 @@ val dataModule = module {
     }
     single<GymsListApi> { GymsListApi(get<HttpClient>()) }
     single<GymRepository> { GymRepositoryImpl(get<GymsListApi>()) }
+}
+
+val matchingModule = module {
+    single<MatchingContext> {
+        MatchingContext(
+            get<GetGymsUseCase>(),
+            get<ShuffleGymsUseCase>(),
+            get<SwipeGymUseCase>()
+        )
+    }
+    viewModel<MatchingViewModel> { MatchingViewModel(get<MatchingContext>()) }
 }

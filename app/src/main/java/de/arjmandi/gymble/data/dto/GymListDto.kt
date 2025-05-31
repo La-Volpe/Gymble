@@ -1,4 +1,11 @@
 package de.arjmandi.gymble.data.dto
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-data class GymListDto(val dto: List<GymDtoItem>)
+
+@Serializable
+data class GymListDto(
+    @SerialName("items")
+    val dto: List<GymDtoItem>
+)
