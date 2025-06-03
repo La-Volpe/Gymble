@@ -34,6 +34,8 @@ import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import de.arjmandi.gymble.feature.matching.model.GymCardUiState
+import de.arjmandi.gymble.ui.theme.dislikeColor
+import de.arjmandi.gymble.ui.theme.likeColor
 
 @Composable
 fun GymCard(gymCardUiState: GymCardUiState) {
@@ -105,11 +107,11 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 					horizontalArrangement = Arrangement.Center
 				) {
 					IconButton(
-						onClick = { /* Handle redo action */ },
+						onClick = { /* Handle dislike action */ },
 						modifier = Modifier
 							.size(48.dp)
 							.clip(CircleShape)
-							.background(Color.Gray)
+							.background(dislikeColor)
 					) {
 						Icon(
 							imageVector = Icons.Rounded.Clear,
@@ -119,16 +121,16 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 					}
 					Spacer(modifier = Modifier.width(8.dp))
 					IconButton(
-						onClick = { /* Handle favorite action */ },
+						onClick = { /* Handle like action */ },
 						modifier = Modifier
 							.size(48.dp)
 							.clip(CircleShape)
-							.background(Color.Blue)
+							.background(likeColor)
 					) {
 						Icon(
 							imageVector = Icons.Rounded.Favorite,
 							contentDescription = "Favorite",
-							tint = Color.Red
+							tint = Color.White
 						)
 					}
 				}
