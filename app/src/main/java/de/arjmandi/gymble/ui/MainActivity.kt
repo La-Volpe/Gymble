@@ -4,6 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import de.arjmandi.gymble.domain.model.Gym
+import de.arjmandi.gymble.feature.matching.model.GymCardUiState
+import de.arjmandi.gymble.feature.matching.ui.GymCard
 import de.arjmandi.gymble.feature.matching.ui.MatchingScreen
 import de.arjmandi.gymble.feature.matching.ui.MatchingViewModel
 import de.arjmandi.gymble.ui.theme.GymbleTheme
@@ -19,11 +24,23 @@ class MainActivity : ComponentActivity() {
 		setContent {
 			GymbleTheme {
 				val state = matchingViewModel.stateModel.state
-				MatchingScreen(
-					state = state,
-					onEvent = matchingViewModel::onEvent,
-				)
+				GymCardPreview()
+
 			}
 		}
 	}
+}
+
+//@Preview(showBackground = true)
+@Composable
+fun GymCardPreview() {
+	val gymCardUiState = GymCardUiState(
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305418/2_geralt_e3xmx7.webp",
+		title = "Geralt’s Gym",
+		subtitle = "No excuses. Just contracts.",
+		description = "SwordFit & Potion Conditioning",
+		vibe = listOf("⚔️ Intense", "🤫 Silent"),
+		quote = "\"Hmm.\""
+	)
+	GymCard(gymCardUiState = gymCardUiState)
 }
