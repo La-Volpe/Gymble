@@ -14,3 +14,4 @@ class MatchingContext(
 	suspend fun loadGyms(): List<Gym> = shuffleGyms(getGyms())
 	fun swipe(direction: SwipeDirection) = swipeGym(direction)
 }
+

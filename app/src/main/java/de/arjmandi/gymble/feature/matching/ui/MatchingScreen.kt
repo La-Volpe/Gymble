@@ -50,6 +50,9 @@ fun MatchingScreen(viewModel: MatchingViewModel) {
 					onCardSwiped = { swipedCard, direction ->
 						gymCards = gymCards - swipedCard
 						viewModel.handleSwipe(direction)
+						if(gymCards.isEmpty()) {
+							viewModel.restock()// Reload gyms when all cards are swiped
+						}
 					}
 				)
 			}
