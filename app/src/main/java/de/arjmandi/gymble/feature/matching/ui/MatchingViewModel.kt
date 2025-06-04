@@ -1,6 +1,5 @@
 package de.arjmandi.gymble.feature.matching.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.arjmandi.gymble.domain.model.Gym

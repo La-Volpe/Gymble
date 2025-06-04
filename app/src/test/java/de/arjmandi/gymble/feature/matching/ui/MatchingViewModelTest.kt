@@ -22,7 +22,7 @@ class MatchingViewModelTest {
 		description = "SwordFit & Potion Conditioning",
 		vibe = listOf("⚔️ Intense", "🤫 Silent"),
 		quote = "\"Hmm.\"",
-		isMatched = true
+		isMatched = true,
 	)
 
 	val swipedGym = GymCardUiState(
@@ -32,7 +32,7 @@ class MatchingViewModelTest {
 		description = "Mystic Strength & Arcane Yoga",
 		vibe = listOf("🔮 Elegant", "🧘‍♀️ Intimidating"),
 		quote = "Magic won't fix your form. I will.",
-		isMatched = false
+		isMatched = false,
 	)
 
 	@Before
