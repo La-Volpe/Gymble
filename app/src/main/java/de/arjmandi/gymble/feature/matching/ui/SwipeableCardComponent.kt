@@ -1,0 +1,104 @@
+package de.arjmandi.gymble.feature.matching.ui
+
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.DraggableAnchors
+import androidx.compose.foundation.gestures.AnchoredDraggableState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+
+import de.arjmandi.gymble.feature.matching.model.GymCardUiState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.ScrollableDefaults
+import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.gestures.animateTo
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
+
+enum class _SwipeDirection {
+	Left, Center, Right
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SwipeableCard(
+	gymCardUiState: GymCardUiState,
+	onSwiped: () -> Unit
+) {
+	val density = LocalDensity.current
+	val swipeThreshold = with(density) { 300.dp.toPx() }
+
+	val anchors = DraggableAnchors {
+		_SwipeDirection.Left at -swipeThreshold
+		_SwipeDirection.Center at 0f
+		_SwipeDirection.Right at swipeThreshold
+	}
+
+	val swipeState = remember {
+		AnchoredDraggableState(
+			initialValue = _SwipeDirection.Center,
+			anchors = anchors,
+		)
+	}
+
+	LaunchedEffect(Unit) {
+		swipeState.updateAnchors(anchors)
+	}
+
+	LaunchedEffect(swipeState.currentValue) {
+		if (swipeState.currentValue != _SwipeDirection.Center) {
+			onSwiped()
+		}
+	}
+
+	val offsetX = swipeState.offset
+	val alpha by remember{
+		derivedStateOf {
+			val offsetAbs = kotlin.math.abs(offsetX)
+			1f - (offsetAbs / swipeThreshold).coerceIn(0f, 1f)
+		}
+	}
+
+	Box(
+		modifier = Modifier
+			.fillMaxWidth()
+			.graphicsLayer {
+				translationX = offsetX
+				this.alpha = alpha
+			}
+			.anchoredDraggable(
+				state = swipeState,
+				orientation = Orientation.Horizontal
+			)
+	) {
+		GymCard(gymCardUiState = gymCardUiState)
+	}
+}
+
+@Composable
+fun GymCardStack(
+	gymCards: List<GymCardUiState>,
+	onCardSwiped: (GymCardUiState) -> Unit
+) {
+	Box(modifier = Modifier.fillMaxSize()) {
+		gymCards.asReversed().forEach { card ->
+			SwipeableCard(
+				gymCardUiState = card,
+				onSwiped = { onCardSwiped(card) }
+			)
+		}
+	}
+}
+
