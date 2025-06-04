@@ -50,7 +50,6 @@ class MatchingViewModel(
 		when (result) {
 			is SwipeResult.Match -> {
 				_matchedGymUiState.value = MatchedResultUiState.MatchedState(swipedGym.copy(isMatched = true))
-				Log.d("TALA", "Matched with gym: ${swipedGym.title}")
 			}
 			is SwipeResult.NoMatch -> {
 				_gymsDoNotLoveYouCounter.update { it + 1 }

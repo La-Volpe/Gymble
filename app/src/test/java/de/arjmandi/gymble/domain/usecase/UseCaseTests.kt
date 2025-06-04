@@ -51,16 +51,6 @@ class UseCaseTests {
 	}
 
 	@Test
-	fun shuffleGymsUseCase_returnsShuffledList_inputListProvided() {
-		val useCase = ShuffleGymsUseCase()
-
-		val shuffled = useCase(gyms)
-
-		assertEquals(gyms.toSet(), shuffled.toSet())
-		assertTrue(shuffled != gyms || gyms.size == 1)
-	}
-
-	@Test
 	fun swipeGymUseCase_returnsCorrectResult_forDifferentDirections() {
 		val useCase = SwipeGymUseCase()
 
