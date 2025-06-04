@@ -26,6 +26,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import de.arjmandi.gymble.domain.model.SwipeDirection
 
 enum class _SwipeDirection {
 	Left, Center, Right
@@ -35,7 +36,7 @@ enum class _SwipeDirection {
 @Composable
 fun SwipeableCard(
 	gymCardUiState: GymCardUiState,
-	onSwiped: () -> Unit
+	onSwiped: (SwipeDirection) -> Unit
 ) {
 	val density = LocalDensity.current
 	val swipeThreshold = with(density) { 300.dp.toPx() }
@@ -58,8 +59,12 @@ fun SwipeableCard(
 	}
 
 	LaunchedEffect(swipeState.currentValue) {
-		if (swipeState.currentValue != _SwipeDirection.Center) {
-			onSwiped()
+		when (swipeState.currentValue) {
+			_SwipeDirection.Left -> onSwiped(SwipeDirection.LEFT)
+			_SwipeDirection.Right -> onSwiped(SwipeDirection.RIGHT)
+			else -> {
+				// Center, do nothing
+			}
 		}
 	}
 
@@ -90,13 +95,18 @@ fun SwipeableCard(
 @Composable
 fun GymCardStack(
 	gymCards: List<GymCardUiState>,
-	onCardSwiped: (GymCardUiState) -> Unit
+	onCardSwiped: (GymCardUiState, SwipeDirection) -> Unit
 ) {
 	Box(modifier = Modifier.fillMaxSize()) {
 		gymCards.asReversed().forEach { card ->
 			SwipeableCard(
 				gymCardUiState = card,
-				onSwiped = { onCardSwiped(card) }
+				onSwiped = { swipeDirection ->
+					when (swipeDirection) {
+						SwipeDirection.LEFT -> onCardSwiped(card, SwipeDirection.LEFT)
+						SwipeDirection.RIGHT -> onCardSwiped(card, SwipeDirection.RIGHT)
+					}
+				}
 			)
 		}
 	}

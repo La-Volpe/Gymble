@@ -2,43 +2,38 @@ package de.arjmandi.gymble.feature.matching.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.arjmandi.gymble.domain.model.Gym
 import de.arjmandi.gymble.domain.model.SwipeDirection
+import de.arjmandi.gymble.domain.model.SwipeResult
 import de.arjmandi.gymble.feature.matching.MatchingContext
-import de.arjmandi.gymble.feature.matching.model.MatchingEvent
-import de.arjmandi.gymble.feature.matching.model.MatchingStateModel
 import de.arjmandi.gymble.feature.matching.model.MatchingUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MatchingViewModel(
 	private val context: MatchingContext,
 ) : ViewModel() {
 
-	val stateModel = MatchingStateModel()
+	private val _uiState = MutableStateFlow<MatchingUiState>(MatchingUiState.LoadingState())
+	val uiState: StateFlow<MatchingUiState> = _uiState.asStateFlow()
+	private val _matchEvent = MutableStateFlow<SwipeResult>(SwipeResult.NoMatch)
+	val matchEvent: StateFlow<SwipeResult> = _matchEvent.asStateFlow()
 
-	fun onEvent(event: MatchingEvent) {
-		when (event) {
-			is MatchingEvent.LoadGyms -> loadGyms()
-			is MatchingEvent.Swipe -> handleSwipe(event.direction)
-		}
-	}
 
-	private fun loadGyms() {
+	fun loadGyms() {
 		viewModelScope.launch {
-			stateModel.update(stateModel.state.copy(isLoading = true, error = null))
+			_uiState.value = MatchingUiState.LoadingState()
 			try {
-				val gyms = context.loadGyms()
-				stateModel.update(MatchingUiState(gyms = gyms))
+				_uiState.value = MatchingUiState.LoadedState(context.loadGyms())
 			} catch (e: Exception) {
-				stateModel.update(stateModel.state.copy(isLoading = false, error = e.message))
+				_uiState.value = MatchingUiState.ErrorState(e.message ?: "An error occurred")
 			}
 		}
 	}
 
-	private fun handleSwipe(direction: SwipeDirection) {
-		val currentIndex = stateModel.state.currentIndex
-		if (currentIndex >= stateModel.state.gyms.size - 1) return
-
-		context.swipe(direction)
-		stateModel.update(stateModel.state.copy(currentIndex = currentIndex + 1))
+	fun handleSwipe(direction: SwipeDirection) {
+		_matchEvent.value = context.swipe(direction)
 	}
 }

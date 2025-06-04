@@ -15,6 +15,7 @@ import de.arjmandi.gymble.feature.matching.model.GymCardUiState
 import de.arjmandi.gymble.feature.matching.model.toGymCardUiState
 import de.arjmandi.gymble.feature.matching.ui.GymCard
 import de.arjmandi.gymble.feature.matching.ui.GymCardStack
+import de.arjmandi.gymble.feature.matching.ui.MatchingScreen
 import de.arjmandi.gymble.feature.matching.ui.MatchingViewModel
 import de.arjmandi.gymble.ui.theme.GymbleTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,9 +29,9 @@ class MainActivity : ComponentActivity() {
 		enableEdgeToEdge()
 		setContent {
 			GymbleTheme {
-				val state = matchingViewModel.stateModel.state
 //				GymCardPreview()
-				GymScreen()
+//				GymScreenPreview()
+				MatchingScreen(matchingViewModel)
 
 			}
 		}
@@ -52,16 +53,16 @@ fun GymCardPreview() {
 
 @Composable
 fun GymScreenPreview() {
-	var gymCards by remember { mutableStateOf(gyms.shuffled().map { it.toGymCardUiState() }) }
+	var gymCards by remember { mutableStateOf(sampleGyms.shuffled().map { it.toGymCardUiState() }) }
 	GymCardStack(
 		gymCards = gymCards,
-		onCardSwiped = { swipedCard ->
+		onCardSwiped = { swipedCard, direction ->
 			gymCards = gymCards - swipedCard
 		}
 	)
 }
 
-val gyms = listOf(
+val sampleGyms = listOf(
 	Gym(
 		name = "Geralt’s Gym",
 		slogan = "No excuses. Just contracts.",
