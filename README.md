@@ -24,21 +24,18 @@ The project follows a **simplified clean architecture**, separating concerns int
 - **Koin** is used for **dependency injection** (lightweight & easy to configure).
 - **Jetpack Compose** powers the entire UI! 🚀
 
----
 
 ## ⚖️ Important Decisions & Trade-offs
 
 | Decision | Reason | Trade-off |
 |----------|--------|-----------|
-| **Ktor Client** 🌐 | Multiplatform support & coroutine-friendly API | Slightly more setup than Android’s built-in networking or Retrofit |
-| **Koin for DI** 🔌 | Lightweight, no code generation | Less compile-time safety than Dagger/Hilt 
-(But does it matter anyway?)|
+| **Ktor Client** 🌐 | Multiplatform support & coroutine-friendly API | Slightly more setup than Retrofit or okhttp |
+| **Koin for DI** 🔌 | Lightweight, no code generation | Less compile-time safety than Dagger/Hilt (But does it matter anyway?) |
 | **Compose-only UI** 🎨 | Fully declarative & concise | beginner devs might find it hard to adapt to Reactive programming. |
 | **Random Matching Logic** 🎲 | Simple 10% match chance | Not realistic for production |
 | **Error Handling** ⚠️ | `ApiResult` sealed classes for explicit error mapping | Slightly more boilerplate |
 | **ViewModel Caching** 🧠 | In-memory gym storage for quick restocking | No persistence (loses data on app restart) |
 
----
 
 ## ⚙️ How Things Work
 
@@ -61,7 +58,6 @@ The project follows a **simplified clean architecture**, separating concerns int
 - Decodes JSON into `GymListDto` → maps to domain models via `GymMapper`.
 - Errors return as `ApiResult.HttpError` or `ApiResult.NetworkError`.
 
----
 
 ## 🚀 Running & Testing
 - **Run tests:** `./gradlew test`
