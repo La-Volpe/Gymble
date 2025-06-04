@@ -1,12 +1,9 @@
 package de.arjmandi.gymble.feature.matching.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,7 +40,7 @@ fun MatchingScreen(viewModel: MatchingViewModel) {
 			gymCards = (uiState as LoadedState).gyms.map { it.toGymCardUiState() }
 		}
 	}
-	LaunchedEffect(matchedUiState){
+	LaunchedEffect(matchedUiState) {
 		matchedGym = when (matchResultState) {
 			SwipeResult.Match -> matchedUiState
 			SwipeResult.NoMatch -> MatchedResultUiState.NoMatchState
@@ -55,7 +52,10 @@ fun MatchingScreen(viewModel: MatchingViewModel) {
 			onDismiss = viewModel.onDismissMatchedGymOverlay,
 		)
 	} else {
-		Box(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+		Box(
+			modifier = Modifier.fillMaxSize().padding(16.dp),
+			contentAlignment = Alignment.Center,
+		) {
 			when (uiState) {
 				is LoadingState -> {
 					CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
@@ -81,29 +81,4 @@ fun MatchingScreen(viewModel: MatchingViewModel) {
 			}
 		}
 	}
-}
-
-@Composable
-fun MatchedGymOverlay(
-	gym: GymCardUiState,
-	onDismiss: () -> Unit,
-) {
-	Box(modifier = Modifier.fillMaxSize().padding(16.dp),
-		contentAlignment = Alignment.Center){
-		Column{
-			Text(
-				text = "Matched with ${gym.title}!",
-				style = MaterialTheme.typography.headlineMedium,
-				modifier = Modifier.padding(bottom = 16.dp),
-			)
-			Text(
-				text = "Swipe right to connect or left to pass.",
-				modifier = Modifier.padding(bottom = 32.dp),
-			)
-			Button(onClick = onDismiss) {
-				Text("Dismiss")
-			}
-		}
-	}
-
 }

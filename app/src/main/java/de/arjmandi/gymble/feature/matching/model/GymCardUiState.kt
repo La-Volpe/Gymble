@@ -9,6 +9,7 @@ data class GymCardUiState(
 	val description: String,
 	val vibe: List<String>,
 	val quote: String,
+	val isMatched: Boolean = false,
 )
 fun Gym.toGymCardUiState(): GymCardUiState {
 	return GymCardUiState(

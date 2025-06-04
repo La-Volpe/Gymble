@@ -107,32 +107,34 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 					modifier = Modifier.fillMaxWidth(),
 					horizontalArrangement = Arrangement.Center,
 				) {
-					IconButton(
-						onClick = { /* Handle dislike action */ },
-						modifier = Modifier
-							.size(48.dp)
-							.clip(CircleShape)
-							.background(dislikeColor),
-					) {
-						Icon(
-							imageVector = Icons.Rounded.Clear,
-							contentDescription = "next",
-							tint = Color.White,
-						)
-					}
-					Spacer(modifier = Modifier.width(8.dp))
-					IconButton(
-						onClick = { /* Handle like action */ },
-						modifier = Modifier
-							.size(48.dp)
-							.clip(CircleShape)
-							.background(likeColor),
-					) {
-						Icon(
-							imageVector = Icons.Rounded.Favorite,
-							contentDescription = "Favorite",
-							tint = Color.White,
-						)
+					if (!gymCardUiState.isMatched) {
+						IconButton(
+							onClick = { /* Handle dislike action */ },
+							modifier = Modifier
+								.size(48.dp)
+								.clip(CircleShape)
+								.background(dislikeColor),
+						) {
+							Icon(
+								imageVector = Icons.Rounded.Clear,
+								contentDescription = "next",
+								tint = Color.White,
+							)
+						}
+						Spacer(modifier = Modifier.width(8.dp))
+						IconButton(
+							onClick = { /* Handle like action */ },
+							modifier = Modifier
+								.size(48.dp)
+								.clip(CircleShape)
+								.background(likeColor),
+						) {
+							Icon(
+								imageVector = Icons.Rounded.Favorite,
+								contentDescription = "Favorite",
+								tint = Color.White,
+							)
+						}
 					}
 				}
 			}

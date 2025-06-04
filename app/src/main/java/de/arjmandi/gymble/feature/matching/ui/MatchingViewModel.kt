@@ -1,5 +1,6 @@
 package de.arjmandi.gymble.feature.matching.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.arjmandi.gymble.domain.model.Gym
@@ -48,7 +49,8 @@ class MatchingViewModel(
 		_matchEvent.value = result
 		when (result) {
 			is SwipeResult.Match -> {
-				_matchedGymUiState.value = MatchedResultUiState.MatchedState(swipedGym)
+				_matchedGymUiState.value = MatchedResultUiState.MatchedState(swipedGym.copy(isMatched = true))
+				Log.d("TALA", "Matched with gym: ${swipedGym.title}")
 			}
 			is SwipeResult.NoMatch -> {
 				_gymsDoNotLoveYouCounter.update { it + 1 }
