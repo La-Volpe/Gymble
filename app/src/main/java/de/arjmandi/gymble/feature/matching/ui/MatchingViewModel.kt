@@ -6,6 +6,8 @@ import de.arjmandi.gymble.domain.model.Gym
 import de.arjmandi.gymble.domain.model.SwipeDirection
 import de.arjmandi.gymble.domain.model.SwipeResult
 import de.arjmandi.gymble.feature.matching.MatchingContext
+import de.arjmandi.gymble.feature.matching.model.GymCardUiState
+import de.arjmandi.gymble.feature.matching.model.MatchedResultUiState
 import de.arjmandi.gymble.feature.matching.model.MatchingUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,7 +23,13 @@ class MatchingViewModel(
 	val uiState: StateFlow<MatchingUiState> = _uiState.asStateFlow()
 	private val _matchEvent = MutableStateFlow<SwipeResult>(SwipeResult.NoMatch)
 	val matchEvent: StateFlow<SwipeResult> = _matchEvent.asStateFlow()
+	private val _matchedGymUiState = MutableStateFlow<MatchedResultUiState>(MatchedResultUiState.NoMatchState)
+	val matchedGymUiState: StateFlow<MatchedResultUiState> = _matchedGymUiState.asStateFlow()
+
 	private val cachedGyms = MutableStateFlow<List<Gym>>(emptyList())
+	private val _gymsDoNotLoveYouCounter = MutableStateFlow(0)
+
+	val onDismissMatchedGymOverlay = { _matchedGymUiState.value = MatchedResultUiState.NoMatchState }
 
 	fun loadGyms() {
 		viewModelScope.launch {
@@ -35,8 +43,17 @@ class MatchingViewModel(
 		}
 	}
 
-	fun handleSwipe(direction: SwipeDirection) {
-		_matchEvent.value = context.swipe(direction)
+	fun handleSwipe(direction: SwipeDirection, swipedGym: GymCardUiState) {
+		val result = context.swipe(direction)
+		_matchEvent.value = result
+		when (result) {
+			is SwipeResult.Match -> {
+				_matchedGymUiState.value = MatchedResultUiState.MatchedState(swipedGym)
+			}
+			is SwipeResult.NoMatch -> {
+				_gymsDoNotLoveYouCounter.update { it + 1 }
+			}
+		}
 	}
 
 	fun restock() {
