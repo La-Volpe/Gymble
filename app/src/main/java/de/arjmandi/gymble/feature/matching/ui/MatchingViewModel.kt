@@ -23,7 +23,6 @@ class MatchingViewModel(
 	val matchEvent: StateFlow<SwipeResult> = _matchEvent.asStateFlow()
 	private val cachedGyms = MutableStateFlow<List<Gym>>(emptyList())
 
-
 	fun loadGyms() {
 		viewModelScope.launch {
 			_uiState.value = MatchingUiState.LoadingState()
@@ -41,10 +40,10 @@ class MatchingViewModel(
 	}
 
 	fun restock() {
-		//_uiState.value = MatchingUiState.LoadedState(context.loadGyms())
+		// _uiState.value = MatchingUiState.LoadedState(context.loadGyms())
 		viewModelScope.launch {
 			_uiState.update { it ->
-				if(cachedGyms.value.isEmpty()) {
+				if (cachedGyms.value.isEmpty()) {
 					MatchingUiState.LoadedState(context.loadGyms())
 				} else {
 					MatchingUiState.LoadedState(cachedGyms.value.shuffled())

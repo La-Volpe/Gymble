@@ -2,9 +2,9 @@ package de.arjmandi.gymble.feature.matching.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -44,7 +44,7 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 			.fillMaxWidth()
 			.padding(16.dp),
 		shape = RoundedCornerShape(10.dp),
-		elevation = CardDefaults.cardElevation(4.dp)
+		elevation = CardDefaults.cardElevation(4.dp),
 	) {
 		Column {
 			AsyncImage(
@@ -57,41 +57,39 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 			Column(
 				modifier = Modifier
 					.fillMaxWidth()
-					.padding(16.dp)
+					.padding(16.dp),
 			) {
 				Text(
 					text = gymCardUiState.title,
 					style = MaterialTheme.typography.headlineSmall,
-					fontWeight = FontWeight.Bold
+					fontWeight = FontWeight.Bold,
 				)
 				Text(
 					text = gymCardUiState.subtitle,
 					style = MaterialTheme.typography.bodyMedium,
-					color = Color.Gray
+					color = Color.Gray,
 				)
 				Spacer(modifier = Modifier.height(8.dp))
 				Text(
 					text = gymCardUiState.description,
-					style = MaterialTheme.typography.bodyMedium
+					style = MaterialTheme.typography.bodyMedium,
 				)
 				Spacer(modifier = Modifier.height(8.dp))
 				Row(
 					modifier = Modifier.fillMaxWidth(),
-					horizontalArrangement = Arrangement.spacedBy(8.dp)
+					horizontalArrangement = Arrangement.spacedBy(8.dp),
 				) {
 					gymCardUiState.vibe.forEach { vibeItem ->
 						Row(
-							verticalAlignment = Alignment.CenterVertically
+							verticalAlignment = Alignment.CenterVertically,
 						) {
 							Box(
 								modifier = Modifier
 									.background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(8.dp))
-									.padding(horizontal = 8.dp, vertical = 4.dp)
-							){
+									.padding(horizontal = 8.dp, vertical = 4.dp),
+							) {
 								Text(text = vibeItem, style = MaterialTheme.typography.bodyMedium)
-
 							}
-
 						}
 					}
 				}
@@ -99,24 +97,24 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 				Text(
 					text = gymCardUiState.quote,
 					style = MaterialTheme.typography.bodyMedium,
-					fontStyle = MaterialTheme.typography.bodyMedium.fontStyle
+					fontStyle = MaterialTheme.typography.bodyMedium.fontStyle,
 				)
 				Spacer(modifier = Modifier.height(16.dp))
 				Row(
 					modifier = Modifier.fillMaxWidth(),
-					horizontalArrangement = Arrangement.Center
+					horizontalArrangement = Arrangement.Center,
 				) {
 					IconButton(
 						onClick = { /* Handle dislike action */ },
 						modifier = Modifier
 							.size(48.dp)
 							.clip(CircleShape)
-							.background(dislikeColor)
+							.background(dislikeColor),
 					) {
 						Icon(
 							imageVector = Icons.Rounded.Clear,
 							contentDescription = "next",
-							tint = Color.White
+							tint = Color.White,
 						)
 					}
 					Spacer(modifier = Modifier.width(8.dp))
@@ -125,12 +123,12 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 						modifier = Modifier
 							.size(48.dp)
 							.clip(CircleShape)
-							.background(likeColor)
+							.background(likeColor),
 					) {
 						Icon(
 							imageVector = Icons.Rounded.Favorite,
 							contentDescription = "Favorite",
-							tint = Color.White
+							tint = Color.White,
 						)
 					}
 				}

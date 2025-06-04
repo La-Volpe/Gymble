@@ -2,10 +2,9 @@ package de.arjmandi.gymble.feature.matching.model
 
 import de.arjmandi.gymble.domain.model.Gym
 
-
-sealed interface MatchingUiState{
+sealed interface MatchingUiState {
 	data class LoadingState(
-		val isLoading: Boolean = true
+		val isLoading: Boolean = true,
 	) : MatchingUiState
 
 	data class LoadedState(
@@ -13,6 +12,6 @@ sealed interface MatchingUiState{
 	) : MatchingUiState
 
 	data class ErrorState(
-		val error: String
+		val error: String,
 	) : MatchingUiState
 }

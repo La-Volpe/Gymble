@@ -50,16 +50,16 @@ fun MatchingScreen(viewModel: MatchingViewModel) {
 					onCardSwiped = { swipedCard, direction ->
 						gymCards = gymCards - swipedCard
 						viewModel.handleSwipe(direction)
-						if(gymCards.isEmpty()) {
-							viewModel.restock()// Reload gyms when all cards are swiped
+						if (gymCards.isEmpty()) {
+							viewModel.restock() // Reload gyms when all cards are swiped
 						}
-					}
+					},
 				)
 			}
 			is ErrorState -> {
 				Text(
 					text = "Something Went wrong...",
-					modifier = Modifier.align(Alignment.Center)
+					modifier = Modifier.align(Alignment.Center),
 				)
 			}
 		}

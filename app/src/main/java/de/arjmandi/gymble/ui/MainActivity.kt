@@ -29,10 +29,9 @@ class MainActivity : ComponentActivity() {
 		enableEdgeToEdge()
 		setContent {
 			GymbleTheme {
-//				GymCardPreview()
-//				GymScreenPreview()
+// 				GymCardPreview()
+// 				GymScreenPreview()
 				MatchingScreen(matchingViewModel)
-
 			}
 		}
 	}
@@ -46,7 +45,7 @@ fun GymCardPreview() {
 		subtitle = "No excuses. Just contracts.",
 		description = "SwordFit & Potion Conditioning",
 		vibe = listOf("⚔️ Intense", "🤫 Silent"),
-		quote = "\"Hmm.\""
+		quote = "\"Hmm.\"",
 	)
 	GymCard(gymCardUiState = gymCardUiState)
 }
@@ -58,7 +57,7 @@ fun GymScreenPreview() {
 		gymCards = gymCards,
 		onCardSwiped = { swipedCard, direction ->
 			gymCards = gymCards - swipedCard
-		}
+		},
 	)
 }
 
@@ -69,10 +68,10 @@ val sampleGyms = listOf(
 		specialty = "SwordFit & Potion Conditioning",
 		vibe = listOf(
 			VibeDto(emoji = "⚔️", trait = "Intense").toString(),
-			VibeDto(emoji = "🤫", trait = "Silent").toString()
+			VibeDto(emoji = "🤫", trait = "Silent").toString(),
 		),
 		quote = "Hmm.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305418/2_geralt_e3xmx7.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305418/2_geralt_e3xmx7.webp",
 	),
 	Gym(
 		name = "Yennefer’s Studio",
@@ -80,10 +79,10 @@ val sampleGyms = listOf(
 		specialty = "Mystic Strength & Arcane Yoga",
 		vibe = listOf(
 			VibeDto(emoji = "🔮", trait = "Elegant").toString(),
-			VibeDto(emoji = "🧘‍♀️", trait = "Intimidating").toString()
+			VibeDto(emoji = "🧘‍♀️", trait = "Intimidating").toString(),
 		),
 		quote = "Magic won't fix your form. I will.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305414/1_yennefer_t4dur3.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305414/1_yennefer_t4dur3.webp",
 	),
 	Gym(
 		name = "Ezio Fit",
@@ -91,10 +90,10 @@ val sampleGyms = listOf(
 		specialty = "Parkour & Assassin Mobility",
 		vibe = listOf(
 			VibeDto(emoji = "🕶️", trait = "Stealthy").toString(),
-			VibeDto(emoji = "🤸", trait = "Agile").toString()
+			VibeDto(emoji = "🤸", trait = "Agile").toString(),
 		),
 		quote = "Requiescat in pace... after leg day.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305418/9_ezio_avvv1s.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305418/9_ezio_avvv1s.webp",
 	),
 	Gym(
 		name = "Sadie’s Iron Haven",
@@ -102,10 +101,10 @@ val sampleGyms = listOf(
 		specialty = "Grit Training & Rifle Strength",
 		vibe = listOf(
 			VibeDto(emoji = "🔥", trait = "Gritty").toString(),
-			VibeDto(emoji = "😤", trait = "Unapologetic").toString()
+			VibeDto(emoji = "😤", trait = "Unapologetic").toString(),
 		),
 		quote = "I ain’t here to babysit.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305418/10_sadie_wlvvfh.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305418/10_sadie_wlvvfh.webp",
 	),
 	Gym(
 		name = "Kara’s Core Lab",
@@ -113,10 +112,10 @@ val sampleGyms = listOf(
 		specialty = "Android HIIT & Circuit Mindfulness",
 		vibe = listOf(
 			VibeDto(emoji = "🤖", trait = "Calm").toString(),
-			VibeDto(emoji = "🎯", trait = "Focused").toString()
+			VibeDto(emoji = "🎯", trait = "Focused").toString(),
 		),
 		quote = "Would you like a protein shake, Todd?",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305417/11_kara_efswoj.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305417/11_kara_efswoj.webp",
 	),
 	Gym(
 		name = "Venom Gym",
@@ -124,10 +123,10 @@ val sampleGyms = listOf(
 		specialty = "Tactical Endurance & CQC",
 		vibe = listOf(
 			VibeDto(emoji = "💣", trait = "Silent").toString(),
-			VibeDto(emoji = "☠️", trait = "Deadly").toString()
+			VibeDto(emoji = "☠️", trait = "Deadly").toString(),
 		),
 		quote = "Kept you waiting, huh?",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305417/12_venom_jwncod.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305417/12_venom_jwncod.webp",
 	),
 	Gym(
 		name = "Ghost Fit HQ",
@@ -135,10 +134,10 @@ val sampleGyms = listOf(
 		specialty = "Stealth Power & Tactical Mobility",
 		vibe = listOf(
 			VibeDto(emoji = "🥷", trait = "Discreet").toString(),
-			VibeDto(emoji = "💪", trait = "Hardcore").toString()
+			VibeDto(emoji = "💪", trait = "Hardcore").toString(),
 		),
 		quote = "They won’t see you coming—or leaving.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305416/13_ghost_cj110o.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305416/13_ghost_cj110o.webp",
 	),
 	Gym(
 		name = "Elizabeth’s Ascent",
@@ -146,10 +145,10 @@ val sampleGyms = listOf(
 		specialty = "Dimensional Strength & Elegance",
 		vibe = listOf(
 			VibeDto(emoji = "🧠", trait = "Smart").toString(),
-			VibeDto(emoji = "👑", trait = "Classy").toString()
+			VibeDto(emoji = "👑", trait = "Classy").toString(),
 		),
 		quote = "A little cardio never hurt the multiverse.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305416/7_elizabeth_pztp0c.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305416/7_elizabeth_pztp0c.webp",
 	),
 	Gym(
 		name = "Emily’s Method",
@@ -157,10 +156,10 @@ val sampleGyms = listOf(
 		specialty = "Blade Agility & Shadow Work",
 		vibe = listOf(
 			VibeDto(emoji = "🖤", trait = "Precise").toString(),
-			VibeDto(emoji = "🎯", trait = "Disciplined").toString()
+			VibeDto(emoji = "🎯", trait = "Disciplined").toString(),
 		),
 		quote = "You either train, or vanish.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305416/8_emily_bgaxka.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305416/8_emily_bgaxka.webp",
 	),
 	Gym(
 		name = "Joel’s Forge",
@@ -168,10 +167,10 @@ val sampleGyms = listOf(
 		specialty = "Raw Strength & Survival Sets",
 		vibe = listOf(
 			VibeDto(emoji = "🪵", trait = "Rugged").toString(),
-			VibeDto(emoji = "🧱", trait = "Grit-Heavy").toString()
+			VibeDto(emoji = "🧱", trait = "Grit-Heavy").toString(),
 		),
 		quote = "You lift what you carry.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/3_joel_cfpz2r.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/3_joel_cfpz2r.webp",
 	),
 	Gym(
 		name = "Claire’s Core Zone",
@@ -179,10 +178,10 @@ val sampleGyms = listOf(
 		specialty = "Reflex Drills & Resistance",
 		vibe = listOf(
 			VibeDto(emoji = "🧟‍♀️", trait = "Fast").toString(),
-			VibeDto(emoji = "🧰", trait = "Resourceful").toString()
+			VibeDto(emoji = "🧰", trait = "Resourceful").toString(),
 		),
 		quote = "Lock, load, lunge.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/5_clair_tkhflx.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/5_clair_tkhflx.webp",
 	),
 	Gym(
 		name = "Ellie’s Edge",
@@ -190,10 +189,10 @@ val sampleGyms = listOf(
 		specialty = "Stealth HIIT & Bow Training",
 		vibe = listOf(
 			VibeDto(emoji = "🎸", trait = "Fierce").toString(),
-			VibeDto(emoji = "🧨", trait = "Defiant").toString()
+			VibeDto(emoji = "🧨", trait = "Defiant").toString(),
 		),
 		quote = "I don’t need luck. I need PRs.",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/4_ellie_mochay.webp"
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/4_ellie_mochay.webp",
 	),
 	Gym(
 		name = "Trevor’s Gym Cage",
@@ -201,9 +200,9 @@ val sampleGyms = listOf(
 		specialty = "Chaos Circuit & Rage Sets",
 		vibe = listOf(
 			VibeDto(emoji = "💥", trait = "Aggressive").toString(),
-			VibeDto(emoji = "📢", trait = "Loud").toString()
+			VibeDto(emoji = "📢", trait = "Loud").toString(),
 		),
 		quote = "DON’T SKIP LEGS, YOU COWARD!",
-		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/6_trevor_xgia6h.webp"
-	)
+		imageUrl = "https://res.cloudinary.com/dlgtohpdw/image/upload/v1748305415/6_trevor_xgia6h.webp",
+	),
 )

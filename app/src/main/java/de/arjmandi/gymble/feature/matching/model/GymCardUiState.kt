@@ -8,7 +8,7 @@ data class GymCardUiState(
 	val subtitle: String,
 	val description: String,
 	val vibe: List<String>,
-	val quote: String
+	val quote: String,
 )
 fun Gym.toGymCardUiState(): GymCardUiState {
 	return GymCardUiState(
@@ -17,6 +17,6 @@ fun Gym.toGymCardUiState(): GymCardUiState {
 		subtitle = this.slogan,
 		description = this.specialty,
 		vibe = this.vibe,
-		quote = this.quote
+		quote = this.quote,
 	)
 }
