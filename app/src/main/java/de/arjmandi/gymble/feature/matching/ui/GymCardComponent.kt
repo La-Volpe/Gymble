@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import coil3.request.placeholder
+import de.arjmandi.gymble.R
 import de.arjmandi.gymble.feature.matching.model.GymCardUiState
 import de.arjmandi.gymble.ui.theme.dislikeColor
 import de.arjmandi.gymble.ui.theme.likeColor
@@ -51,6 +53,7 @@ fun GymCard(gymCardUiState: GymCardUiState) {
 				model = ImageRequest.Builder(LocalContext.current)
 					.data(gymCardUiState.imageUrl)
 					.crossfade(true)
+					.placeholder(R.drawable.loading_placeholder)
 					.build(),
 				contentDescription = "A picture of ${gymCardUiState.title}",
 			)
