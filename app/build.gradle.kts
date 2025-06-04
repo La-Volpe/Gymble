@@ -1,3 +1,5 @@
+
+
 plugins {
 	alias(libs.plugins.android.application)
 	alias(libs.plugins.kotlin.android)
@@ -36,6 +38,11 @@ android {
 	buildFeatures {
 		compose = true
 	}
+	packaging {
+		resources {
+			excludes += "/META-INF/*"
+		}
+	}
 }
 
 dependencies {
@@ -68,6 +75,8 @@ dependencies {
 	androidTestImplementation(libs.androidx.espresso.core)
 	androidTestImplementation(platform(libs.androidx.compose.bom))
 	androidTestImplementation(libs.androidx.ui.test.junit4)
+	androidTestImplementation(libs.mockk.android)
+	androidTestImplementation(libs.coroutines.test)
 	debugImplementation(libs.androidx.ui.tooling)
 	debugImplementation(libs.androidx.ui.test.manifest)
 }

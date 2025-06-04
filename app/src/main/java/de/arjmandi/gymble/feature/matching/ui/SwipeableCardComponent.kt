@@ -8,7 +8,6 @@ import androidx.compose.foundation.gestures.anchoredDraggable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
@@ -17,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import de.arjmandi.gymble.domain.model.SwipeDirection
 import de.arjmandi.gymble.feature.matching.model.GymCardUiState
@@ -72,6 +72,7 @@ fun SwipeableCard(
 	Box(
 		modifier = Modifier
 			.fillMaxWidth()
+			.testTag("SwipeableCard")
 			.graphicsLayer {
 				translationX = offsetX
 				this.alpha = alpha
