@@ -1,40 +1,68 @@
-# Gymble
+# 🏋️ Gymble
+**Gymble** is an Android app built with **Kotlin** and **Jetpack Compose** that lets users swipe through a deck of gyms inspired by characters from games and franchises. Like or dislike gyms by swiping right or left. You might even get matched if luck is on your side! 🎮✨
 
-Gymble is an Android app built with Kotlin and Jetpack Compose that allows users to swipe through a deck of gyms inspired by characters from various games and franchises. Users can like or dislike gyms by swiping right or left and may be matched with a gym if luck is on their side.
 
-## Architecture Overview
+## 🏗️ Architecture Overview
+The project follows a **simplified clean architecture**, separating concerns into **data**, **domain**, and **presentation** layers.
 
-The project follows a simplified clean architecture style separating concerns into data, domain, and presentation layers.
+### 🔹 **Domain Layer**
+- Contains **business logic** in plain Kotlin.
+- Core domain models: `Gym`, `SwipeDirection`, and `SwipeResult`.
+- Use cases:
+  - `GetGymsUseCase` 📥
+  - `ShuffleGymsUseCase` 🔀
+  - `SwipeGymUseCase` 👆👇
 
-- **Domain layer** contains business logic in plain Kotlin. `Gym`, `SwipeDirection`, and `SwipeResult` represent core domain models. Use case classes such as `GetGymsUseCase`, `ShuffleGymsUseCase`, and `SwipeGymUseCase` encapsulate actions.
-- **Data layer** is responsible for retrieving gym data from the network. `GymsListApi` wraps a `HttpClient` from Ktor and returns `ApiResult` objects to signify success or failure. The API result is mapped to domain models in `GymMapper`.
-- **Presentation layer** lives under `feature/matching` and `ui`. `MatchingViewModel` orchestrates user interactions by calling into the domain layer and exposes state flows consumed by Compose screens. Koin is used for dependency injection.
+### 📡 **Data Layer**
+- Handles **network operations** to fetch gym data.
+- `GymsListApi` uses **Ktor’s `HttpClient`** to retrieve data and returns `ApiResult` (success/failure).
+- `GymMapper` converts API responses into domain models.
 
-## Important Decisions & Trade-offs
+### 🎨 **Presentation Layer**
+- Located under `feature/matching` and `ui`.
+- `MatchingViewModel` manages state and user interactions.
+- **Koin** is used for **dependency injection** (lightweight & easy to configure).
+- **Jetpack Compose** powers the entire UI! 🚀
 
-- **Ktor Client** was chosen instead of Android's built-in networking libraries for its multiplatform support and coroutine-based API. This keeps the networking code simple and testable.
-- **Koin for DI** offers lightweight dependency injection without requiring code generation. While Dagger/Hilt provide compile-time guarantees, Koin keeps build times short and configuration straightforward for this small project.
-- **Compose-only UI**: The entire UI is written in Jetpack Compose. XML layouts were avoided to keep the UI layer concise and fully declarative.
-- **Random Matching Logic**: Swiping right calls `SwipeGymUseCase`, which has a 10% chance to produce a match using `Random.nextInt`. This is intentionally simple to keep the example focused and avoid more complex backend state management.
-- **Error Handling**: `GymsListApi` converts HTTP responses into `ApiResult` sealed classes. This design trades some boilerplate for explicit error mapping and easier testing of edge cases.
-- **ViewModel Caching**: `MatchingViewModel` caches gyms in memory to allow restocking the swipe deck without fetching from the network again. While a persistent cache could improve resilience, the in-memory approach keeps the sample lightweight.
+---
 
-## How Things Work
+## ⚖️ Important Decisions & Trade-offs
 
-1. **App Startup**
-   - `GymbleApplication` starts Koin and loads modules defined in `AppModule.kt`.
-   - Dependencies such as `HttpClient`, `GymsListApi`, and view models become available through Koin.
-2. **Loading Gyms**
-   - `MatchingViewModel.loadGyms()` calls `MatchingContext.loadGyms()`, which executes `GetGymsUseCase` to fetch gyms from the repository and then shuffles them.
-   - On success, the UI state becomes `LoadedState` with a list of domain `Gym` objects.
-3. **Swiping**
-   - `SwipeableCardComponent` tracks drag offset and triggers `onSwiped` when the card passes a threshold.
-   - The view model converts swipes into `SwipeDirection` and calls `SwipeGymUseCase` to determine if a match occurs.
-   - A match displays `MatchedGymOverlay` using Compose animations; otherwise, the next card is shown.
-4. **Network API**
-   - `GymsListApi.fetchGymList()` performs an HTTP GET to a pastebin URL, decodes the JSON into `GymListDto`, and maps it to domain models via `GymMapper`.
-   - Errors are mapped to `ApiResult.HttpError` or `ApiResult.NetworkError` to provide clear failure reasons.
+| Decision | Reason | Trade-off |
+|----------|--------|-----------|
+| **Ktor Client** 🌐 | Multiplatform support & coroutine-friendly API | Slightly more setup than Android’s built-in networking or Retrofit |
+| **Koin for DI** 🔌 | Lightweight, no code generation | Less compile-time safety than Dagger/Hilt 
+(But does it matter anyway?)|
+| **Compose-only UI** 🎨 | Fully declarative & concise | beginner devs might find it hard to adapt to Reactive programming. |
+| **Random Matching Logic** 🎲 | Simple 10% match chance | Not realistic for production |
+| **Error Handling** ⚠️ | `ApiResult` sealed classes for explicit error mapping | Slightly more boilerplate |
+| **ViewModel Caching** 🧠 | In-memory gym storage for quick restocking | No persistence (loses data on app restart) |
 
-## Running & Testing
+---
 
-This repository contains an Android project configured with Gradle. Run `./gradlew test` to execute unit tests and `./gradlew lintKotlin` for code style checks (requires internet access for dependencies).
+## ⚙️ How Things Work
+
+### 1️⃣ **App Startup**
+- `GymbleApplication` initializes **Koin** and loads modules from `AppModule.kt`.
+- Dependencies (`HttpClient`, `GymsListApi`, and ViewModels) become available.
+
+### 2️⃣ **Loading Gyms**
+- `MatchingViewModel.loadGyms()` fetches gyms via `GetGymsUseCase`.
+- On success, UI state updates to `LoadedState` with a shuffled list of `Gym` objects.
+
+### 3️⃣ **Swiping**
+- `SwipeableCardComponent` tracks drag gestures.
+- Swipes trigger `onSwiped` → `SwipeGymUseCase` determines if a match occurs (10% chance! 🍀).
+- **Match?** → `MatchedGymOverlay` with animations! 🎉
+- **No match?** → Next card appears.
+
+### 4️⃣ **Network API**
+- `GymsListApi.fetchGymList()` makes an HTTP GET request.
+- Decodes JSON into `GymListDto` → maps to domain models via `GymMapper`.
+- Errors return as `ApiResult.HttpError` or `ApiResult.NetworkError`.
+
+---
+
+## 🚀 Running & Testing
+- **Run tests:** `./gradlew test`
+- **Lint checks:** `./gradlew lintKotlin` (requires internet for dependencies)
