@@ -5,6 +5,8 @@
 ## 🏗️ Architecture Overview
 The project follows a **simplified clean architecture**, separating concerns into **data**, **domain**, and **presentation** layers.
 
+![](https://res.cloudinary.com/dlgtohpdw/image/upload/v1749222333/demo_sb6ym7.gif)
+
 ### 🔹 **Domain Layer**
 - Contains **business logic** in plain Kotlin.
 - Core domain models: `Gym`, `SwipeDirection`, and `SwipeResult`.
